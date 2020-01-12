@@ -1,0 +1,98 @@
+﻿<Page x:Class="Bubblz.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+      xmlns:local="using:Bubblz"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+      xmlns:vm="using:Bubblz.ViewModel"
+      extensions:Mouse.Cursor="Cross"
+      PointerMoved="Page_PointerMoved"
+      PointerReleased="Page_PointerReleased"
+      mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:MainViewModel />
+    </Page.DataContext>
+
+    <Page.Background>
+        <LinearGradientBrush SpreadMethod="Pad" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="#FF002972" />
+            <GradientStop Offset="1" Color="#FF38C0DE" />
+        </LinearGradientBrush>
+    </Page.Background>
+
+    <Grid HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          Background="Transparent">
+
+        <ItemsControl ItemsSource="{Binding Balls}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <controls:DropShadowPanel Canvas.Left="{Binding Left}"
+                                              Canvas.Top="{Binding Top}"
+                                              BlurRadius="20"
+                                              IsMasked="True"
+                                              OffsetX="10"
+                                              OffsetY="10"
+                                              ShadowOpacity="1"
+                                              Color="Black">
+                        <Ellipse Width="{Binding Diameter}"
+                                 Height="{Binding Diameter}"
+                                 Fill="{Binding Fill}">
+                            <Ellipse.RenderTransform>
+                                <TranslateTransform X="{Binding Left}" Y="{Binding Top}" />
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+                    </controls:DropShadowPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <controls:DropShadowPanel Canvas.Left="{Binding Left}"
+                                  Canvas.Top="{Binding Top}"
+                                  BlurRadius="20"
+                                  IsMasked="True"
+                                  OffsetX="10"
+                                  OffsetY="10"
+                                  ShadowOpacity="1"
+                                  Color="Black">
+            <controls:DropShadowPanel.RenderTransform>
+                <TranslateTransform X="{Binding NewBall.Left}" Y="{Binding NewBall.Top}" />
+            </controls:DropShadowPanel.RenderTransform>
+
+            <Ellipse Width="{Binding NewBall.Diameter}"
+                     Height="{Binding NewBall.Diameter}"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     Fill="{Binding NewBall.Fill}"
+                     Opacity="0.5"
+                     Stroke="{Binding NewBall.Stroke}"
+                     StrokeThickness="1" />
+
+        </controls:DropShadowPanel>
+
+        <controls:DropShadowPanel Margin="10"
+                                  HorizontalAlignment="Right"
+                                  VerticalAlignment="Top"
+                                  BlurRadius="20"
+                                  IsMasked="True"
+                                  OffsetX="10"
+                                  OffsetY="10"
+                                  ShadowOpacity="1"
+                                  Color="Black">
+            <TextBlock FontFamily="Forte"
+                       FontSize="40"
+                       Foreground="White"
+                       HorizontalTextAlignment="Right"
+                       Text="{Binding Balls.Count}" />
+        </controls:DropShadowPanel>
+    </Grid>
+</Page>
