@@ -14,4 +14,4 @@ Highscore is analog currently. If you don't remember your score, nobody knows yo
 I use the great [Windows Community Toolkit](https://github.com/windows-toolkit/WindowsCommunityToolkit) Many thanks to them. 
 
 ## License
-This software is released under the [MIT License](license)
+This software is released under the [MIT License](/LICENSE.md)
