@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Media;
+﻿
+using Microsoft.Toolkit.Uwp.UI.Media;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,17 +10,11 @@ using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
-namespace Bubblz.ViewModel
+namespace Bubblz.Model
 {
-    public class Ball : INotifyPropertyChanged
+    public class Ball : BaseClass
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged(string PropertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
-        }
-
-
+       
         double _Diameter;
         public double Diameter
         {
@@ -47,7 +42,7 @@ namespace Bubblz.ViewModel
         public double Top => _Y - Diameter / 2;
 
 
-        Color _Color = Colors.Green;
+        Color _Color = default;
         public Color Color
         {
             get => _Color;
@@ -58,6 +53,7 @@ namespace Bubblz.ViewModel
             => new RadialGradientBrush(Colors.White, Color)
             {
                 AlphaMode = AlphaMode.Premultiplied,
+                FallbackColor = Colors.White,
                 ColorInterpolationMode = ColorInterpolationMode.ScRgbLinearInterpolation,
                 GradientOrigin = new Point(0.7, 0.2),
                 SpreadMethod = GradientSpreadMethod.Pad

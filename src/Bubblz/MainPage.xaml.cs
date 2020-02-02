@@ -29,60 +29,9 @@ namespace Bubblz
         public MainPage()
         { 
             this.InitializeComponent();
+            this.DataContext = new MainViewModel();
         }
 
-        private void Page_PointerMoved(object sender, PointerRoutedEventArgs e)
-        {
-            var pos = e.GetCurrentPoint(this).Position;
-            ViewModel.NewBall.X = pos.X;
-            ViewModel.NewBall.Y = pos.Y;
-        }
 
-        private async void Page_PointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-            var ballToAdd = new Ball 
-            { 
-                X = ViewModel.NewBall.X, 
-                Y = ViewModel.NewBall.Y, 
-                Diameter = ViewModel.NewBall.Diameter,
-                Color = ViewModel.NewBall.Color
-            };
-
-            if (ViewModel.Balls.Any(x => x.IntersectsOtherBall(ballToAdd)))
-            {
-                var dlg = new MessageDialog("Das war's :-(", "Ende");
-                
-                ViewModel.NewBall.Diameter = 0;
-                ViewModel.GrowBallTimer.Stop();
-
-                dlg.Commands.Add(new UICommand { Label = "Noch mal", Id = 0 });
-                dlg.Commands.Add(new UICommand { Label = "Ende", Id = 1 });
-
-                this.PointerMoved -= Page_PointerMoved;
-                this.PointerReleased -= Page_PointerReleased;
-
-                var result = await dlg.ShowAsync();
-
-                switch (result.Id)
-                {
-                    case 0:
-                        ViewModel.Reset();
-                        ViewModel.GrowBallTimer.Start();
-                        this.PointerMoved += Page_PointerMoved;
-                        this.PointerReleased += Page_PointerReleased;
-                        break;
-                    default:
-                        App.Current.Exit();
-                        break;
-                }
-            }
-            else
-            {
-ViewModel.Balls.Add(ballToAdd);
-            ViewModel.NewBall.SetRandomColor();
-            }
-
-            
-        }
     }
 }
